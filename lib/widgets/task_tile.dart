@@ -13,7 +13,7 @@ class TaskTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(taskText),
+      title: Text(taskText, style: TextStyle(decoration: (taskIsDone ? TextDecoration.lineThrough: null)),),
       trailing: Checkbox(
         value: taskIsDone,
         onChanged: toggleTaskDone,

@@ -7,6 +7,7 @@ import 'package:flutter_todo_list_app/models/task.dart';
 
 class TaskList extends StatelessWidget {
   final textController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -14,16 +15,34 @@ class TaskList extends StatelessWidget {
         body: Container(
           child: Column(
             children: <Widget>[
-              TextFormField(
-                controller: textController,
-              ),
-              FlatButton(
-                color: Colors.blue,
-                onPressed: (){
-                  Task newTask = Task(taskText: textController.text);
-                  Provider.of<TaskData>(context).addTask(newTask);
-                  textController.clear();
-                },
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    controller: textController,
+                    decoration: InputDecoration(
+                      hintText: "Add Tasks",
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () {
+                          if (_formKey.currentState.validate()) {
+                            Task newTask = Task(taskText: textController.text);
+                            Provider.of<TaskData>(context).addTask(newTask);
+                            textController.clear();
+                          }
+                        },
+                        //child: Text('Add', style: TextStyle(color: Colors.white),),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
               ),
               Flexible(
                 child: ListView.builder(
@@ -36,7 +55,7 @@ class TaskList extends StatelessWidget {
                         Provider.of<TaskData>(context).toggleTaskDone(task);
                       },
                       deleteTask: () {
-                        Provider.of<TaskData>( context).deleteTask(task);
+                        Provider.of<TaskData>(context).deleteTask(task);
                       },
                     );
                   },
