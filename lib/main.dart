@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import "task_data.dart";
-import 'package:flutter_todo_list_app/screens/task_list.dart';
-
+import 'screens/main_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
 //          primaryColor: Color(0xff080a1f),
 //        ),
 
-        home: TaskList(),
+        home: MainScreen(),
       ),
     );
   }

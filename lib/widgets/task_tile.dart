@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:flutter_todo_list_app/task_data.dart';
+import 'package:circular_check_box/circular_check_box.dart';
 
 class TaskTile extends StatelessWidget {
   final String taskText;
@@ -14,11 +12,15 @@ class TaskTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(taskText, style: TextStyle(decoration: (taskIsDone ? TextDecoration.lineThrough: null)),),
-      trailing: Checkbox(
+      trailing: CircularCheckBox(
         value: taskIsDone,
         onChanged: toggleTaskDone,
       ),
       onLongPress: deleteTask,
+      onTap: (){
+        //the toggle task state requires a boolean argument. In the onChanged above, the boolean value of the checkbox is automatically passed to the function, so we didn't have to use it there.
+        toggleTaskDone(!taskIsDone);
+      }
     );
   }
 }
